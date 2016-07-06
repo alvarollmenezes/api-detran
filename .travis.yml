@@ -3,9 +3,9 @@ language: node_js
 services:
   - docker
 script: 
-  docker build -t api-detran .
+  docker build -t prodest/api-detran .
 deploy:
   provider: script
-  script: docker login -e="$DOCKER_EMAIL" -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD" && docker push api-detran
+  script: docker login -e="$DOCKER_EMAIL" -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD" && docker push prodest/api-detran
   on:
     branch: master
