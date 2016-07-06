@@ -7,7 +7,7 @@ module.exports = () => {
     // Needed because of PRODEST's SSL
     process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 
-    homeController.getDriverLicenseData = ( req, res ) => {
+    homeController.getDriverData = ( req, res ) => {
         const authHeader = req.get( 'Authorization' );
 
         return fetchData( authHeader, detran().getDadosGeraisCNH )
