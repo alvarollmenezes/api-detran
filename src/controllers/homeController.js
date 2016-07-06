@@ -20,6 +20,9 @@ module.exports = () => {
                 acquiringLicense: data.ExisteProcessoHabilitacaoAberto,
                 hasAdministrativeIssues: data.ExisteProcessoAdmAberto
             } );
+        } )
+        .catch( err => {
+            throw err;
         } );
     };
 
@@ -42,6 +45,9 @@ module.exports = () => {
             } );
 
             return res.json( resp );
+        } )
+        .catch( err => {
+            throw err;
         } );
     };
 
