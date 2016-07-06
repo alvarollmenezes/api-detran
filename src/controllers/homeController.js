@@ -22,7 +22,8 @@ module.exports = () => {
             } );
         } )
         .catch( err => {
-            throw err;
+            console.log( err );
+            res.send( err.message );
         } );
     };
 
@@ -47,7 +48,8 @@ module.exports = () => {
             return res.json( resp );
         } )
         .catch( err => {
-            throw err;
+            console.log( err );
+            res.send( err.message );
         } );
     };
 
