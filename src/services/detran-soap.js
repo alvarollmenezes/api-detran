@@ -38,7 +38,13 @@ module.exports = () => {
 
         return getJsonResponseBody( soapBody, soapAction )
         .then( json => {
-            const data = json.GetPontuacaoResponse[ 0 ].GetPontuacaoResult[ 0 ][ 'diffgr:diffgram' ][ 0 ].DocumentElement[ 0 ].dtInfracoes;
+            const element = json.GetPontuacaoResponse[ 0 ].GetPontuacaoResult[ 0 ][ 'diffgr:diffgram' ][ 0 ].DocumentElement;
+
+            if ( !element || element.length <= 0 ) {
+                return [];
+            }
+
+            const data = element[ 0 ].dtInfracoes;
 
             return data.map( a => {
                 return {
