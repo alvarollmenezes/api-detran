@@ -13,7 +13,7 @@ module.exports = () => {
         return fetchData( authHeader, detran().getDadosGeraisCNH )
         .then( data => {
             return res.json( {
-                status: data.SituacaoCNH,
+                status: +data.SituacaoCNH,
                 blockMotive: data.MotivoBloqueio,
                 expirationDate: data.DataVencimento,
                 hasTickets: data.ExistemInfracoesPontuadas === 'true',
