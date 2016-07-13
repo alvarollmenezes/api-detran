@@ -16,9 +16,9 @@ module.exports = () => {
                 status: data.SituacaoCNH,
                 blockMotive: data.MotivoBloqueio,
                 expirationDate: data.DataVencimento,
-                hasTickets: data.ExistemInfracoesPontuadas,
-                acquiringLicense: data.ExisteProcessoHabilitacaoAberto,
-                hasAdministrativeIssues: data.ExisteProcessoAdmAberto
+                hasTickets: data.ExistemInfracoesPontuadas === 'true',
+                acquiringLicense: data.ExisteProcessoHabilitacaoAberto === 'true',
+                hasAdministrativeIssues: data.ExisteProcessoAdmAberto === 'true'
             } );
         } )
         .catch( err => {
@@ -36,12 +36,12 @@ module.exports = () => {
                 return {
                     description: a.desctipoinfracao,
                     classification: a.descclassificacaoinfracao,
-                    points: a.pontuacao,
+                    points: +a.pontuacao,
                     place: a.localinfracao,
                     district: a.municipioinfracao,
                     date: a.datahora,
                     plate: a.placa,
-                    warning: a.Advertencia
+                    warning: a.Advertencia === 'true'
                 };
             } );
 
