@@ -51,7 +51,7 @@ app.use( ( err, req, res, next ) => {
     } );
 } );
 
-var pathApp = express();
+let pathApp = express();
 
 let path = config.path;
 pathApp.use( path, app );
