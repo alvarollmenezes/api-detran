@@ -15,7 +15,8 @@ app.use( cors() );
 app.use( compress() );
 
 // load our routes
-app = require( './routes/home' )( app );
+app = require( './routes/driver' )( app );
+app = require( './routes/vehicle' )( app );
 
 // error handlers
 
