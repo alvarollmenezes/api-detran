@@ -2,12 +2,12 @@ const detran = require( '../services/detran-soap' );
 const authorization = require( '../services/authorization' );
 
 module.exports = () => {
-    var homeController = new Object();
+    var driverController = new Object();
 
     // Needed because of PRODEST's SSL
     process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 
-    homeController.getDriverData = ( req, res ) => {
+    driverController.getData = ( req, res ) => {
         const authHeader = req.get( 'Authorization' );
 
         return fetchData( authHeader, detran().getDadosGeraisCNH )
@@ -27,7 +27,7 @@ module.exports = () => {
         } );
     };
 
-    homeController.getTickets = ( req, res ) => {
+    driverController.getTickets = ( req, res ) => {
         const authHeader = req.get( 'Authorization' );
 
         return fetchData( authHeader, detran().getPontuacao )
@@ -62,6 +62,6 @@ module.exports = () => {
         } );
     }
 
-    return homeController;
+    return driverController;
 };
 
