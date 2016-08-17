@@ -2,10 +2,17 @@ require: sudo
 language: node_js
 services:
   - docker
+env:
+  - DOCKER_IMAGE=prodest/api-detran
+  - SERVICE_NAME=api-detran
+  - RANCHER_URL=http://cloud.datacenter.es.gov.br.local/v1/projects/1a4680
+  - RANCHER_STACK=api
+  - RANCHER_COMPOSE_URL=http://cloud.datacenter.es.gov.br.local/v1/projects/1a4680/environments/1e56/composeconfig
 script: 
-  docker build -t prodest/api-detran .
+  docker build -t $DOCKER_IMAGE .
 deploy:
   provider: script
-  script: docker login -e="$DOCKER_EMAIL" -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD" && docker push prodest/api-detran
+  skip_cleanup: true
+  script: /bin/sh travis.sh
   on:
     branch: master
