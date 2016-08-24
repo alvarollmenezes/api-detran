@@ -1,5 +1,5 @@
-const detran = require( '../services/detran-soap' );
 const authorization = require( '../services/authorization' );
+const driverService = require( '../services/driverService' );
 
 module.exports = () => {
     var vehicleController = new Object();
@@ -10,7 +10,7 @@ module.exports = () => {
     vehicleController.getData = ( req, res, next ) => {
         const authHeader = req.get( 'Authorization' );
 
-        return fetchData( authHeader, detran().getDadosGeraisCNH )
+        return fetchData( authHeader, driverService().getDadosGeraisCNH )
         .then( () => {
             return res.json( {
                 plate: 'ABC1234',
@@ -27,7 +27,7 @@ module.exports = () => {
     vehicleController.getTickets = ( req, res, next ) => {
         const authHeader = req.get( 'Authorization' );
 
-        return fetchData( authHeader, detran().getPontuacao )
+        return fetchData( authHeader, driverService().getPontuacao )
         .then( data => {
             const resp = data.map( a => {
                 return {
