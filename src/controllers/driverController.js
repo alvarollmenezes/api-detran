@@ -4,7 +4,7 @@ const driverService = require( '../services/driverService' );
 module.exports = () => {
     var driverController = new Object();
 
-    driverController.getData = ( req, res ) => {
+    driverController.getData = ( req, res, next ) => {
         const authHeader = req.get( 'Authorization' );
 
         return fetchData( authHeader, driverService().getDadosGeraisCNH )
@@ -19,12 +19,14 @@ module.exports = () => {
             } );
         } )
         .catch( err => {
-            console.log( err );
-            res.send( err.message );
+            if ( err.number == 999999 ) {
+                err.status = 404;
+            }
+            next( err );
         } );
     };
 
-    driverController.getTickets = ( req, res ) => {
+    driverController.getTickets = ( req, res, next ) => {
         const authHeader = req.get( 'Authorization' );
 
         return fetchData( authHeader, driverService().getInfracoes )
@@ -45,15 +47,17 @@ module.exports = () => {
             return res.json( resp );
         } )
         .catch( err => {
-            console.log( err );
-            res.send( err.message );
+            if ( err.number == 99999 ) {
+                err.status = 404;
+            }
+            next( err );
         } );
     };
 
     function fetchData( authHeader, detranMethod ) {
         return authorization().fetchUserInfo( authHeader )
         .then( userInfo => {
-            return detranMethod( userInfo.cpf );
+            return detranMethod( userInfo.cpf, userInfo.cnhNumero, userInfo.cnhCedula );
         } );
     }
 

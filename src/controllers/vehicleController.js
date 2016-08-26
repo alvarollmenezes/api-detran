@@ -1,61 +1,47 @@
-const authorization = require( '../services/authorization' );
-const driverService = require( '../services/driverService' );
+const vehicleService = require( '../services/vehicleService' );
 
 module.exports = () => {
     var vehicleController = new Object();
 
-    // Needed because of PRODEST's SSL
-    process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
-
     vehicleController.getData = ( req, res, next ) => {
-        const authHeader = req.get( 'Authorization' );
+        const plate = req.query.plate;
+        const renavam = req.query.renavam;
 
-        return fetchData( authHeader, driverService().getDadosGeraisCNH )
-        .then( () => {
+        return vehicleService().getDadosVeiculo( plate, renavam )
+        .then( data => {
             return res.json( {
-                plate: 'ABC1234',
-                model: 'BMW 118i',
-                color: 'Prata'
+                model: data.MARCA.trim(),
+                color: data.COR.trim()
             } );
         } )
         .catch( err => {
-            console.log( err );
             next( err );
         } );
     };
 
     vehicleController.getTickets = ( req, res, next ) => {
-        const authHeader = req.get( 'Authorization' );
+        const plate = req.query.plate;
+        const renavam = req.query.renavam;
 
-        return fetchData( authHeader, driverService().getPontuacao )
+        return vehicleService().getInfracoes( plate, renavam )
         .then( data => {
             const resp = data.map( a => {
                 return {
-                    description: a.desctipoinfracao,
-                    classification: a.descclassificacaoinfracao,
-                    points: +a.pontuacao,
-                    place: a.localinfracao,
-                    district: a.municipioinfracao,
-                    date: a.datahora
+                    description: a.DescricaoInfracao.trim(),
+                    classification: a.Natureza.trim(),
+                    points: +a.Pontos,
+                    place: a.LocalInfracao.trim(),
+                    district: a.NomeCidadeInfracao.trim(),
+                    date: a.DataHoraAutuacao
                 };
             } );
 
             return res.json( resp );
         } )
         .catch( err => {
-            console.log( err );
             next( err );
         } );
     };
-
-    function fetchData( authHeader, detranMethod ) {
-        return authorization().fetchUserInfo( authHeader )
-        .then( userInfo => {
-            process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
-
-            return detranMethod( userInfo.cpf );
-        } );
-    }
 
     return vehicleController;
 };

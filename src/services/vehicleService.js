@@ -1,22 +1,21 @@
 const sql = require( 'mssql' );
 const detran = require( '../config/detran' );
 
-const SP_DADOS_CNH = detran.sit.SPDadosCNH;
-const SP_INFRACOES = detran.sit.SPInfracoes;
-const config = detran.sit.sqlConnectionConfig;
+const SP_DADOS_VEICULO = detran.detranNet.SPDadosVeiculo;
+const SP_INFRACOES = detran.detranNet.SPInfracoes;
+const config = detran.detranNet.sqlConnectionConfig;
 
 module.exports = () => {
     const sitService = new Object();
     const connection = new sql.Connection( config );
 
-    sitService.getDadosGeraisCNH = function( cpf, cnh, ballot ) {
+    sitService.getDadosVeiculo = function( plate, renavam ) {
         return connection.connect()
             .then( conn => {
                 return new sql.Request( conn )
-                    .input( 'CPF', sql.Numeric, cpf )
-                    .input( 'NumRegistroCNH', sql.Numeric, cnh )
-                    .input( 'NumCedula', sql.Numeric, ballot )
-                    .execute( SP_DADOS_CNH );
+                    .input( 'placa', sql.VarChar( 10 ), plate )
+                    .input( 'renavam', sql.BigInt, renavam )
+                    .execute( SP_DADOS_VEICULO );
             } )
             .then( recordsets => {
                 connection.close();
@@ -28,13 +27,12 @@ module.exports = () => {
             } );
     };
 
-    sitService.getInfracoes = function( cpf, cnh, ballot ) {
+    sitService.getInfracoes = function( plate, renavam ) {
         return connection.connect()
             .then( conn => {
                 return new sql.Request( conn )
-                    .input( 'numCPF', sql.Numeric, cpf )
-                    .input( 'NumRegistroCNH', sql.Numeric, cnh )
-                    .input( 'NumCedula', sql.Numeric, ballot )
+                    .input( 'placa', sql.VarChar( 10 ), plate )
+                    .input( 'renavam', sql.BigInt, renavam )
                     .execute( SP_INFRACOES );
             } )
             .then( recordsets => {

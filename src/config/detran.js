@@ -18,6 +18,8 @@ module.exports = {
     },
 
     detranNet: {
+        SPDadosVeiculo: 'sp_Ext_Mobile_ConsultaVeiculo',
+        SPInfracoes: 'sp_Ext_Mobile_ConsultaInfracoes',
         sqlConnectionConfig: {
             user: process.env.DETRANNET_USER,
             password: process.env.DETRANNET_PASSWORD,
