@@ -42,7 +42,8 @@ module.exports = () => {
                     plate: a.placa,
                     warning: a.Advertencia === 'true'
                 };
-            } );
+            } )
+            .sort( ( a, b ) => b.date.getTime() - a.date.getTime() );
 
             return res.json( resp );
         } )

@@ -34,7 +34,8 @@ module.exports = () => {
                     district: a.NomeCidadeInfracao.trim(),
                     date: a.DataHoraAutuacao
                 };
-            } );
+            } )
+            .sort( ( a, b ) => b.date.getTime() - a.date.getTime() );
 
             return res.json( resp );
         } )
