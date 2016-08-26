@@ -32,7 +32,7 @@ app.use( ( req, res, next ) => {
 if ( config.env === 'development' ) {
     app.use( ( err, req, res, next ) => {
         res.status( err.status || 500 );
-        console.log( err );
+        console.error( err );
         res.json(
             {
                 err: err.message,
@@ -45,7 +45,7 @@ if ( config.env === 'development' ) {
 // only error message leaked to user
 app.use( ( err, req, res, next ) => {
     res.status( err.status || 500 );
-    console.log( err.stack );
+    console.error( err );
     res.json( {
         err: err.message,
         fields: []

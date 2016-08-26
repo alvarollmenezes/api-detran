@@ -1,4 +1,3 @@
-
 const rp = require( 'request-promise' );
 
 const acessoCidadao = require( '../config/acesso-cidadao' );
@@ -22,7 +21,6 @@ module.exports = () => {
          *      sid: "9239"
          * }
          */
-
         var options = {
             method: 'GET',
             uri: acessoCidadao.userInfoUrl,
