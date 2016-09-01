@@ -6,10 +6,10 @@ const SP_INFRACOES = detran.detranNet.SPInfracoes;
 const config = detran.detranNet.sqlConnectionConfig;
 
 module.exports = () => {
-    const sitService = new Object();
+    const vehicleService = new Object();
     const connection = new sql.Connection( config );
 
-    sitService.getDadosVeiculo = function( plate, renavam ) {
+    vehicleService.getDadosVeiculo = function( plate, renavam ) {
         return connection.connect()
             .then( conn => {
                 return new sql.Request( conn )
@@ -27,7 +27,7 @@ module.exports = () => {
             } );
     };
 
-    sitService.getInfracoes = function( plate, renavam ) {
+    vehicleService.getInfracoes = function( plate, renavam ) {
         return connection.connect()
             .then( conn => {
                 return new sql.Request( conn )
@@ -45,5 +45,5 @@ module.exports = () => {
             } );
     };
 
-    return sitService;
+    return vehicleService;
 };

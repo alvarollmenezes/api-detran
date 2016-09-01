@@ -1,56 +1,30 @@
 const config = require( './config/app' );
-const cors = require( 'cors' );
-
 if ( config.env === 'production' ) {
     require( 'newrelic' );
 }
-
+const apiMiddleware = require( 'node-mw-api-prodest' ).middleware;
 const express = require( 'express' );
-const compress = require( 'compression' );
 
 let app = express();
 
-app.use( cors() );
-
-app.use( compress() );
+app.use( apiMiddleware( {
+    compress: true,
+    cors: true,
+    authentication: {
+        jwtPublicKey: config.jwtPublicKey
+    }
+} ) );
 
 // load our routes
-app = require( './routes/driver' )( app );
-app = require( './routes/vehicle' )( app );
+require( './routes/driver' )( app );
+require( './routes/vehicle' )( app );
 
-// error handlers
-
-// catch 404 and forward to error handler
-app.use( ( req, res, next ) => {
-    var err = new Error( 'Not Found' );
-    err.status = 404;
-    next( err );
-} );
-
-// development error handler
-// will print full error
-if ( config.env === 'development' ) {
-    app.use( ( err, req, res, next ) => {
-        res.status( err.status || 500 );
-        console.error( err );
-        res.json(
-            {
-                err: err.message,
-                stack: err.stack
-            } );
-    } );
-}
-
-// production error handler
-// only error message leaked to user
-app.use( ( err, req, res, next ) => {
-    res.status( err.status || 500 );
-    console.error( err );
-    res.json( {
-        err: err.message,
-        fields: []
-    } );
-} );
+app.use( apiMiddleware( {
+    error: {
+        notFound: true,
+        debug: config.env === 'development'
+    }
+} ) );
 
 let pathApp = express();
 

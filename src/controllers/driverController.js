@@ -5,9 +5,7 @@ module.exports = () => {
     var driverController = new Object();
 
     driverController.getData = ( req, res, next ) => {
-        const authHeader = req.get( 'Authorization' );
-
-        return fetchData( authHeader, driverService().getDadosGeraisCNH )
+        return driverService().getDadosGeraisCNH( req.userInfo.cpf, req.userInfo.cnhNumero, req.userInfo.cnhCedula )
         .then( data => {
             return res.json( {
                 status: +data.SituacaoCNH,
@@ -21,15 +19,15 @@ module.exports = () => {
         .catch( err => {
             if ( err.number == 999999 ) {
                 err.status = 404;
+                err.userMessage = err.message;
+                err.handled = true;
             }
             next( err );
         } );
     };
 
     driverController.getTickets = ( req, res, next ) => {
-        const authHeader = req.get( 'Authorization' );
-
-        return fetchData( authHeader, driverService().getInfracoes )
+        return driverService().getInfracoes( req.userInfo.cpf, req.userInfo.cnhNumero, req.userInfo.cnhCedula )
         .then( data => {
             const resp = data.map( a => {
                 return {
@@ -50,17 +48,12 @@ module.exports = () => {
         .catch( err => {
             if ( err.number == 99999 ) {
                 err.status = 404;
+                err.userMessage = err.message;
+                err.handled = true;
             }
             next( err );
         } );
     };
-
-    function fetchData( authHeader, detranMethod ) {
-        return authorization().fetchUserInfo( authHeader )
-        .then( userInfo => {
-            return detranMethod( userInfo.cpf, userInfo.cnhNumero, userInfo.cnhCedula );
-        } );
-    }
 
     return driverController;
 };
