@@ -22,7 +22,9 @@
     "express": "^4.14.0",
     "mssql": "^3.3.0",
     "newrelic": "^1.28.1",
+    "node-mw-api-prodest": "^1.2.4",
     "request-promise": "^3.0.0",
+    "uuid": "^2.0.2",
     "xml2js": "^0.4.17"
   },
   "devDependencies": {

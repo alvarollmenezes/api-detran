@@ -5,6 +5,4 @@ module.exports = app => {
     app.get( '/vehicle', vehicleController.getData );
 
     app.get( '/vehicle/tickets', vehicleController.getTickets );
-
-    return app;
 };

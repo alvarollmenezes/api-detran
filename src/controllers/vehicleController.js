@@ -1,5 +1,13 @@
 const vehicleService = require( '../services/vehicleService' );
 
+function vehicleNotFound( next ) {
+    const error = new Error( 'Veículo não encontrado.' );
+    error.userMessage = error.message;
+    error.handled = true;
+    error.status = 404;
+    next( error );
+}
+
 module.exports = () => {
     var vehicleController = new Object();
 
@@ -9,6 +17,12 @@ module.exports = () => {
 
         return vehicleService().getDadosVeiculo( plate, renavam )
         .then( data => {
+
+            if ( !data.MARCA ) {
+                vehicleNotFound( next );
+                return;
+            }
+
             return res.json( {
                 model: data.MARCA.trim(),
                 color: data.COR.trim()
@@ -25,6 +39,12 @@ module.exports = () => {
 
         return vehicleService().getInfracoes( plate, renavam )
         .then( data => {
+
+            if ( !data[ 0 ].CodigoRenainf ) {
+                vehicleNotFound( next );
+                return;
+            }
+
             const resp = data.map( a => {
                 return {
                     description: a.DescricaoInfracao.trim(),
