@@ -40,7 +40,7 @@ module.exports = () => {
         return vehicleService().getInfracoes( plate, renavam )
         .then( data => {
 
-            if ( !data[ 0 ].CodigoRenainf ) {
+            if ( data[ 0 ] && !data[ 0 ].CodigoRenainf ) {
                 vehicleNotFound( next );
                 return;
             }
