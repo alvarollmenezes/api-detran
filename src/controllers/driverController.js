@@ -1,4 +1,3 @@
-const authorization = require( '../services/authorization' );
 const driverService = require( '../services/driverService' );
 
 module.exports = () => {
