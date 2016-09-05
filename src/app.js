@@ -12,6 +12,23 @@ app.use( apiMiddleware( {
     cors: true,
     authentication: {
         jwtPublicKey: config.jwtPublicKey
+    },
+    limit: {
+        max: 300,
+        duration: 10 * 60 * 1000,
+        perSecond: false,
+        redisUrl: config.redisUrl,
+        apiId: 'api-detran'
+    }
+} ) );
+
+app.use( apiMiddleware( {
+    limit: {
+        max: 10,
+        duration: 10 * 1000,
+        perSecond: false,
+        redisUrl: config.redisUrl,
+        apiId: 'api-detran-2'
     }
 } ) );
 
