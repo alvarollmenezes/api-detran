@@ -42,7 +42,7 @@ module.exports = () => {
 
             // TODO: Find better way to do this
             // Check for vehicle not found
-            if ( data.length == 1 && !data[ 0 ].DataHoraAutuacao ) {
+            if ( data.length === 1 && !data[ 0 ].DataHoraAutuacao ) {
                 vehicleNotFound( next );
                 return;
             }

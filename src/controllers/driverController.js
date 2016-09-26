@@ -16,7 +16,7 @@ module.exports = () => {
             } );
         } )
         .catch( err => {
-            if ( err.number == 999999 ) {
+            if ( err.number === 999999 ) {
                 err.status = 404;
                 err.userMessage = err.message;
                 err.handled = true;
@@ -45,7 +45,7 @@ module.exports = () => {
             return res.json( resp );
         } )
         .catch( err => {
-            if ( err.number == 99999 ) {
+            if ( err.number === 99999 ) {
                 err.status = 404;
                 err.userMessage = err.message;
                 err.handled = true;
