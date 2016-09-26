@@ -1,6 +1,6 @@
-'use strict'
+'use strict';
 
-const newrelic = require("./src/config/newrelic");
+const newrelic = require( './src/config/newrelic' );
 
 /**
  * New Relic agent configuration.
@@ -12,17 +12,17 @@ exports.config = {
   /**
    * Array of application names.
    */
-  app_name: [newrelic.appName],
+    app_name: [ newrelic.appName ],
   /**
    * Your New Relic license key.
    */
-  license_key: newrelic.key,
-  logging: {
+    license_key: newrelic.key,
+    logging: {
     /**
      * Level at which to log. 'trace' is most useful to New Relic when diagnosing
      * issues with the agent, 'info' and higher will impose the least overhead on
      * production applications.
      */
-    level: newrelic.level
-  }
-}
+        level: newrelic.level
+    }
+};
