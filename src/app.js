@@ -28,7 +28,7 @@ app.use( apiMiddleware( {
         max: parseInt( configMiddleware.max2 ),
         duration: parseInt( configMiddleware.duration2Sec ) * 1000,
         perSecond: parseInt( configMiddleware.perSecond2 ),
-        redisUrl: parseInt( config.redisUrl ),
+        redisUrl: config.redisUrl,
         apiId: 'api-detran-2'
     }
 } ) );
