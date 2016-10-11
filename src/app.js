@@ -1,3 +1,4 @@
+const configMiddleware = require( './config/apiMiddleware' );
 const config = require( './config/app' );
 if ( config.env === 'production' ) {
     require( 'newrelic' );
@@ -14,9 +15,9 @@ app.use( apiMiddleware( {
         jwtPublicKey: config.jwtPublicKey
     },
     limit: {
-        max: 300,
-        duration: 10 * 60 * 1000,
-        perSecond: false,
+        max: parseInt( configMiddleware.max ),
+        duration: parseInt( configMiddleware.time ) * 60 * 1000,
+        perSecond: parseInt( configMiddleware.maxSecond ),
         redisUrl: config.redisUrl,
         apiId: 'api-detran'
     }
@@ -24,10 +25,10 @@ app.use( apiMiddleware( {
 
 app.use( apiMiddleware( {
     limit: {
-        max: 10,
-        duration: 10 * 1000,
-        perSecond: false,
-        redisUrl: config.redisUrl,
+        max: parseInt( configMiddleware.max2 ),
+        duration: parseInt( configMiddleware.duration2Sec ) * 1000,
+        perSecond: parseInt( configMiddleware.perSecond2 ),
+        redisUrl: parseInt( config.redisUrl ),
         apiId: 'api-detran-2'
     }
 } ) );
