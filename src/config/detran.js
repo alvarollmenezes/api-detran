@@ -2,6 +2,7 @@ module.exports = {
     sit: {
         SPDadosCNH: 'getDadosGeraisCNH',
         SPInfracoes: 'getConsultaInfracoes_Publico',
+        SPDadosCondutor: 'getDadosCondutor_AcessoCidadao',
         sqlConnectionConfig: {
             user: process.env.SIT_USER,
             password: process.env.SIT_PASSWORD,
