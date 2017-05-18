@@ -13,7 +13,13 @@ app.use( apiMiddleware( {
     cors: true,
     authentication: {
         jwtPublicKey: config.jwtPublicKey
-    },
+    }
+} ) );
+
+// load our routes
+require( './routes/driverAcessoCidadao' )( app );
+
+app.use( apiMiddleware( {
     limit: {
         max: parseInt( configMiddleware.max ),
         duration: parseInt( configMiddleware.time ) * 60 * 1000,
@@ -33,7 +39,7 @@ app.use( apiMiddleware( {
     }
 } ) );
 
-// load our routes
+// load limited routes
 require( './routes/driver' )( app );
 require( './routes/vehicle' )( app );
 
